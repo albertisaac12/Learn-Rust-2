@@ -28,4 +28,104 @@ Cargo also provides a command called `cargo check`. This command quickly checks 
 
 When your project is finally ready for release, you can use `cargo build --release` to compile it with optimizations. This command will create an executable in `target/release` instead of target/debug. The optimizations make your Rust code run faster, but turning them on lengthens the time it takes for your program to compile. This is why there are two different profiles: one for development, when you want to rebuild quickly and often, and another for building the final program you’ll give to a user that won’t be rebuilt repeatedly and that will run as fast as possible. If you’re benchmarking your code’s running time, be sure to run cargo build --release and benchmark with the executable in target/release.
 
-**Refer to the actual code file to learn more, only generic info will be put here**
+## 📌 Comparison Table
+
+### **Trait**
+
+Defines shared behavior for types. Acts like an interface. Types must implement it.
+
+```rust
+trait Speak {
+    fn speak(&self);
+}
+
+struct Dog;
+
+impl Speak for Dog {
+    fn speak(&self) {
+        println!("Woof!");
+    }
+}
+```
+
+### **Library (Crate)**
+
+A Rust package (crate) that contains reusable code. Can be binary or library.
+
+```rust
+pub fn greet(name: &str) {
+    println!("Hello, {}!", name);
+}
+```
+
+**Usage:**
+
+```rust
+use my_library::greet;
+
+fn main() {
+    greet("Alice");
+}
+```
+
+### **Module**
+
+A way to organize code within a crate. Can be public (`pub`). Helps with reusability.
+
+```rust
+pub mod math {
+    pub fn add(a: i32, b: i32) -> i32 {
+        a + b
+    }
+}
+```
+
+**Usage:**
+
+```rust
+use my_library::math;
+
+fn main() {
+    println!("{}", math::add(2, 3));
+}
+```
+
+### **Type (Struct)**
+
+Defines data structures that hold values and methods.
+
+```rust
+struct Person {
+    name: String,
+    age: u32,
+}
+```
+
+### **Type (Enum)**
+
+Defines a set of possible values (variants). Useful for state representation.
+
+```rust
+enum Color {
+    Red,
+    Green,
+    Blue,
+}
+
+fn print_color(c: Color) {
+    match c {
+        Color::Red => println!("Red"),
+        Color::Green => println!("Green"),
+        Color::Blue => println!("Blue"),
+    }
+}
+```
+
+```plaintext
+ Why do we use rand::Rng;?
+1. thread_rng() returns a random number generator.
+2. That generator implements the Rng trait`.
+3. The .gen_range() method is defined in the Rng trait`.
+4. In Rust, traits must be in scope to use their methods.
+   Without use rand::Rng;, the compiler doesn't know about .gen_range(), even though thread_rng() exists.
+```

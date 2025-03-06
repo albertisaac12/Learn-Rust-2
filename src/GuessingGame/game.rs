@@ -1,4 +1,5 @@
 use std::io;
+use rand::Rng; // from the rand package use the Rng trait
 fn main() {
     println!("Guess the number! ");
     println!("Please input your guess.");
