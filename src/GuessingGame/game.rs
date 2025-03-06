@@ -1,15 +1,61 @@
 use std::io;
-use rand::Rng; // from the rand package use the Rng trait
+use rand::Rng; 
+use std::cmp::Ordering;
+/*  
+    from the rand package use the Rng trait ("Note: In rust you need to bring in the trait into scope if you want to use the function from any Type that implements that trait"); 
+    Best example is the Rng trait the reason we are bringing in the Rng trait into scope is to let rust know that the rand::thread_rng() implements the Rng trait to be specific the gen_range(); function
+
+    actual flow => rand::thread_rng().gen_range(1..=100);
+    now the rand::thread_rng() returns a random number generator (which maybe a struct) That generator implements the Rng trait, for rust to understand it implements Rng we bring the Rng trait into scope now we finally call the gen_range();
+*/
+
+/*
+    form std library import the cmp module and from cmp module fetch Ordering enum; 
+
+    pub enum Ordering {
+        Less,
+        Equal,
+        Greater,
+    }
+
+*/
 fn main() {
     println!("Guess the number! ");
     println!("Please input your guess.");
 
+    
+    let secret_number: u32 = rand::thread_rng().gen_range(1..=100);
+    println!("The secrect number is  {secret_number}");
+    
+    loop {
     let mut guess = String::new(); // mutable variable
-
-
+    println!("Please Enter a Guess: ");
     io::stdin().read_line(&mut guess).expect("Failed to read line");
-    /*from the io module use the stdin() assocaited function that returns a Handle of the Stdin(A struct), on that struct call the read_line method which then returns a result type which either resolves to Ok or Err */
+    /*from the io module use the stdin() associated function that returns a Handle of the Stdin(A struct), on that struct call the read_line method which then returns a result type which either resolves to Ok or Err */
     println!("You guessed: {}",guess);
+
+    // convert the guess to number
+    /*
+        We learn a couple of things below 1st we overload the variable we declare the guess again but this time its a u32 and rust is smart enough to understand the different guess types.
+    */
+    let guess:u32 = match guess.trim().parse() { 
+        Ok(num) => num,
+        Err(_) => continue,
+    };
+
+    /*
+        The cmp method compares two values and can be called on anything that can be compared.
+        It takes a reference to whatever you want to compare with: here it’s comparing guess to converted_num
+     */
+    match guess.cmp(&secret_number) {
+        Ordering::Equal => {
+            println!("You Win");
+            break;
+        }
+        Ordering::Greater=> println!("Too big"),
+        Ordering::Less => println!("To Less")
+    }
+}
 
 }
 

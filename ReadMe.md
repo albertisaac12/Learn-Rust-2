@@ -128,4 +128,13 @@ fn print_color(c: Color) {
 3. The .gen_range() method is defined in the Rng trait`.
 4. In Rust, traits must be in scope to use their methods.
    Without use rand::Rng;, the compiler doesn't know about .gen_range(), even though thread_rng() exists.
+
+5. rand::thread_rng() returns a random number generator specific to the current thread.
+6.It creates an instance of a secure, fast, and thread-local random number generator.
+7.This function does not need to be seeded manually, as it automatically handles seeding.
+
+8. .gen_range(1..=100)
+9. .gen_range(start..=end) generates a random number within the given range (inclusive of both ends).
+10. 1..=100 means generate a number from 1 to 100, including 100.
+11. This method comes from the Rng trait, which is why we need use rand::Rng;.
 ```
