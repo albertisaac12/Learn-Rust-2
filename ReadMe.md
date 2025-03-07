@@ -28,6 +28,8 @@ Cargo also provides a command called `cargo check`. This command quickly checks 
 
 When your project is finally ready for release, you can use `cargo build --release` to compile it with optimizations. This command will create an executable in `target/release` instead of target/debug. The optimizations make your Rust code run faster, but turning them on lengthens the time it takes for your program to compile. This is why there are two different profiles: one for development, when you want to rebuild quickly and often, and another for building the final program you’ll give to a user that won’t be rebuilt repeatedly and that will run as fast as possible. If you’re benchmarking your code’s running time, be sure to run cargo build --release and benchmark with the executable in target/release.
 
+## Note: Integer overflow and underflow will result in a panic only in the debug mode where as with the --release flag it will not be the case.
+
 ## 📌 Comparison Table
 
 ### **Trait**
@@ -137,4 +139,41 @@ fn print_color(c: Color) {
 9. .gen_range(start..=end) generates a random number within the given range (inclusive of both ends).
 10. 1..=100 means generate a number from 1 to 100, including 100.
 11. This method comes from the Rng trait, which is why we need use rand::Rng;.
+```
+
+The tuple without any values has a special name, `unit`. This value and its corresponding type are both written `()` and represent an empty value or an empty return type. Expressions implicitly return the unit value if they don’t return any other value.
+
+## When your code calls a function, the values passed into the function (including, potentially, pointers to data on the heap) and the function’s local variables get pushed onto the stack. When the function is over, those values get popped off the stack.
+
+```rust
+//string literlas => &str;
+//string Object => String;
+```
+
+```plaintext
+With the String type, in order to support a mutable, growable piece of text, we need to allocate an amount of memory on the heap, unknown at compile time, to hold the contents. This means:
+1. The memory must be requested from the memory allocator at runtime.
+2. We need a way of returning this memory to the allocator when we’re done with our String.
+
+That first part is done by us: when we call String::from, its implementation requests the memory it needs. This is pretty much universal in programming languages.
+
+However, the second part is different. In languages with a garbage collector (GC), the GC keeps track of and cleans up memory that isn’t being used anymore, and we don’t need to think about it. In most languages without a GC, it’s our responsibility to identify when memory is no longer being used and to call code to explicitly free it, just as we did to request it. Doing this correctly has historically been a difficult programming problem. If we forget, we’ll waste memory. If we do it too early, we’ll have an invalid variable. If we do it twice, that’s a bug too. We need to pair exactly one allocate with exactly one free.
+```
+
+Rust calls the `drop` function as soon the variable goes out of the scope
+now the drop function basically returns the space allocated for the variable
+
+## Stack only copy and deep copy
+
+Rust has a special annotation called the `Copy` trait that we can place on types that are stored on the stack, as integers are
+If a type implements the `Copy` trait, variables that use it do not move, but rather are trivially copied, making them still valid after assignment to another variable.
+
+Rust won’t let us annotate a type with `Copy` if the type, or any of its parts, has implemented the `Drop` trait.
+If the type needs something special to happen when the value goes out of scope and we add the Copy annotation to that type, we’ll get a compile-time error.
+
+Returning values can also transfer ownership.
+
+```plaintext
+The ownership of a variable follows the same pattern every time: assigning a value to another variable moves it.
+When a variable that includes data on the heap goes out of scope, the value will be cleaned up by drop unless ownership of the data has been moved to another variable.
 ```

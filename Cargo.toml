@@ -13,3 +13,19 @@ path = "./src/GuessingGame/game.rs"
 [[bin]]
 name = "traitScope"
 path = "./src/traitScope.rs"
+
+[[bin]]
+name = "shadow"
+path = "./src/3-scopeAndShadow.rs"
+
+[[bin]]
+name = "dt"
+path = "./src/4-dataType.rs"
+
+[[bin]]
+name = "se"
+path = "src/5-statementsAndExpressions.rs"
+
+[[bin]]
+name = "owner"
+path = "src/ownership/stackHeap.rs"
