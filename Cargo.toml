@@ -29,3 +29,11 @@ path = "src/5-statementsAndExpressions.rs"
 [[bin]]
 name = "owner"
 path = "src/ownership/stackHeap.rs"
+
+[[bin]]
+name = "reference"
+path = "src/ReferenceBorrowing/reference.rs"
+
+[[bin]]
+name = "slice"
+path = "src/Slice/slice.rs"

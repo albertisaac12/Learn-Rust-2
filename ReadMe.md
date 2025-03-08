@@ -177,3 +177,53 @@ Returning values can also transfer ownership.
 The ownership of a variable follows the same pattern every time: assigning a value to another variable moves it.
 When a variable that includes data on the heap goes out of scope, the value will be cleaned up by drop unless ownership of the data has been moved to another variable.
 ```
+
+```rust
+// two mutable borrow of the same variable cannot happen twice in the same scope
+// 2 mutable references can be made if the scope changes
+let mut s = String::from("hello");
+{
+    let r1 = &mut s;
+}
+
+let r2 = &mut s;
+
+
+
+let mut s = String::from("hello");
+let r1 = &s; // no problem
+let r2 = &s; // no problem
+let r3 = &mut s; // BIG PROBLEM
+println!("{}, {}, and {}", r1, r2, r3); // will throw error as s was initially borrowed as an immutable reference
+
+// Note that a reference’s scope starts from where it is introduced and continues through the last time that reference is used. For instance, this code will compile because the last usage of theimmutable references is in the println!, before the mutable reference is introduced:
+
+let mut s = String::from("hello");
+
+let r1 = &s; // no problem
+let r2 = &s; // no problem
+println!("{r1} and {r2}");
+
+// variables r1 and r2 will not be used after this point
+let r3 = &mut s; // no problem
+println!("{r3}");
+
+```
+
+## Dangling Pointer
+
+```rust
+fn dangle() -> &String { // dangle returns a reference to a String
+
+    let s = String::from("hello"); // s is a new String
+
+    &s // we return a reference to the String, s
+} // Here, s goes out of scope, and is dropped. Its memory goes away.
+  // Danger!
+
+```
+
+## The Rules of References
+
+1. At any given time, you can have either one mutable reference or any number of immutable references.
+2. References must always be valid.
