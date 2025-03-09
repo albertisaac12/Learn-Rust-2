@@ -37,3 +37,19 @@ path = "src/ReferenceBorrowing/reference.rs"
 [[bin]]
 name = "slice"
 path = "src/Slice/slice.rs"
+
+[[bin]]
+name = "struct"
+path = "src/Struct/struct.rs"
+
+[[bin]]
+name = "struct1"
+path = "src/Struct/structExcersice.rs"
+
+[[bin]]
+name = "enum"
+path = "src/Enum/enum.rs"
+
+[[bin]]
+name = "library"
+path = "src/Project1/LibraryManagemnt.rs"
