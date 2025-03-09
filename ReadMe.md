@@ -227,3 +227,15 @@ fn dangle() -> &String { // dangle returns a reference to a String
 
 1. At any given time, you can have either one mutable reference or any number of immutable references.
 2. References must always be valid.
+
+```rust
+
+if let (1) = (2) {
+
+} else {
+
+}
+
+// 1 should be the type you are matching 2 with example if 2 is of type Option<String> then 1 will be either Some(value) or None
+
+```
