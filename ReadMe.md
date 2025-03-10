@@ -371,3 +371,48 @@ takes_str(&s2); // Works fine!
 2. Use let else when you must handle the failure case before continuing. 🚀
 
 ## https://chatgpt.com/share/67ce2fa4-586c-8005-a5b3-555fe0ce40d5
+
+## Packages, Crates and Modules
+
+A related concept is scope: the nested context in which code is written has a set of names that are defined as “in scope.” When reading, writing, and compiling code, programmers and compilers need to know whether a particular name at a particular spot refers to a variable, function, struct, enum, module, constant, or other item and what that item means. You can create scopes and change which names are in or out of scope. You can’t have two items with the same name in the same scope
+
+1. **Packages**: A Cargo feature that lets you build, test, and share crates
+2. **Crates**: A tree of modules that produces a library or executable
+3. **Modules and use**: Let you control the organization, scope, and privacy of paths
+4. **Paths**: A way of naming an item, such as a struct, function, or modules
+
+## Note:
+
+1. **Cargo follows a convention that src/main.rs is the crate root of a binary crate with the same name as the package.**
+2. **Likewise, Cargo knows that if the package directory contains src/lib.rs, the package contains a library crate with the same name as the package, and src/lib.rs is its crate root.**
+3. **Cargo passes the crate root files to rustc to build the library or binary.**
+
+## Module Cheat Sheet
+
+**Case 1** : If module inside the crate root :
+
+```rust
+// main.rs
+
+pub mod garden;
+
+fn main() {
+
+}
+```
+
+Go to `src/garden.rs` or `src/garden/mod.rs` for the garden definition.
+
+**case 2** : If the module has sub modules
+
+```rust
+// main.rs
+use crate::garden::vegetables:asparagus; // Note asparagus is a type and not a module in this example
+pub mod garden;
+
+fn main() {
+
+}
+```
+
+Go to `src/garden/vegetables.rs` or `src/garden/vegetables/mod.rs` for the asparagus definition
