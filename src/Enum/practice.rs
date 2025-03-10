@@ -34,6 +34,13 @@ fn main () {
     let my_str_2:&str = &my_string; // this will work automatic dereferencig
     
     println!("{}", my_str);  // Prints "hello"
+
+    let some_option = Some("hello");
+
+    let Some(_value) = some_option else {
+        println!("No value found!");
+        return;
+    };
 }
 
 fn nicknameExisists(meow: &Option<String>) {

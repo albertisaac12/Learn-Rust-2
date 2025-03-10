@@ -369,3 +369,5 @@ takes_str(&s2); // Works fine!
 
 1. Use if let when handling one case while ignoring others.
 2. Use let else when you must handle the failure case before continuing. 🚀
+
+## https://chatgpt.com/share/67ce2fa4-586c-8005-a5b3-555fe0ce40d5
