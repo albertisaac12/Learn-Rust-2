@@ -55,5 +55,9 @@ name = "iflet"
 path = "src/Enum/if-let.rs"
 
 [[bin]]
+name = "prac2"
+path = "src/Enum/practice.rs"
+
+[[bin]]
 name = "library"
 path = "src/Project1/LibraryManagemnt.rs"
